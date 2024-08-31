@@ -8,6 +8,7 @@
   "spec": {
     "apiServer": "https://192.168.88.60:6443",
     "namespace": "default",
+    "injectLabels": true,
     "resourceDefaults": {},
     "expectVersions": {}
   }

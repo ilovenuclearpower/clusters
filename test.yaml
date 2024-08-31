@@ -1,0 +1,35 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: adulation-absolutely-legal-tls
+spec:
+  secretName: specr-absolutely-legal-tls
+  duration: 2160h # 90 days
+  renewBefore: 604800s # 7 days before expiration
+  isCA: false
+  commonName: adulation.absolutely.legal
+  dnsNames:
+  - adulation.absolutely.legal
+  - www.adulation.absolutely.legal
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hamster-absolutely-legal-tls
+specs
+  secretName: hamster-absolutely-legal-tls
+  duration: 2160h # 90 days
+  renewBefore: 604800s # 7 days before expiration
+  isCA: false
+  commonName: hamster.absolutely.legal
+  dnsNames:
+  - hamster.absolutely.legal
+  - www.hamster.absolutely.legal
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

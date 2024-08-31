@@ -5,7 +5,7 @@ local helm = createHelm(std.thisFile);
 
 local ns = k.core.v1.namespace;
 {
-    new(namespace, ip_range):: {
+    new(namespace, ip_range, peer_ASN, target_ASN):: {
         local metallb_namespace = ns.new(namespace) + {
             metadata: {
                 name: namespace,
@@ -21,15 +21,30 @@ local ns = k.core.v1.namespace;
             namespace: namespace,
         }),
         metallb_config: {
+            addresspool: {
             apiVersion: "metallb.io/v1beta1",
             kind: "IPAddressPool",
             metadata: {
-                name: "default",
+                name: "k8s",
                 namespace: namespace
             },
             spec: {
-                addresses: ip_range
+                addresses: ip_range,
+                avoidBuggyIPs: true
             }
-        }
+            },
+            l2_peering: {
+                apiVersion: "metallb.io/v1beta1",
+                kind: "L2Advertisement",
+                metadata: {
+                    name: "local-network",
+                    namespace: namespace
+                },
+                spec: {
+                    ipAddressPools: ["k8s"],
+                }
+            },
+        },  
+
     }
 }
